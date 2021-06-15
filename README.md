@@ -16,6 +16,7 @@ git clone https://github.com/superedge/website.git
 cd website
 npm install
 git submodule update --init --recursive --depth 1
+make load-submodule
 ```
 
 ### 3. Serve the site locally
