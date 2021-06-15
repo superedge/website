@@ -1,0 +1,123 @@
++++
+title = "SuperEdge"
+linkTitle = "SuperEdge"
+
++++
+
+{{< blocks/cover image_anchor="top" height="" color="white" >}}
+<div class="mx-auto">
+	<div style="display:flex; flex-direction: row; justify-content: center; flex-wrap: wrap;width:100%;">
+		<figure style="max-width:800px">
+			<img src="_resources/images/superedge-logo_white.png" alt="SuperEdge Logo" style='max-width:100%'>
+		</figure>
+	</div>
+	<a class="btn btn-lg btn-primary mr-3 mb-4" href="{{< relref "/docs" >}}">
+		Learn More <i class="fas fa-arrow-alt-circle-right ml-2"></i>
+	</a>
+	<a class="btn btn-lg btn-secondary mr-3 mb-4" href="https://github.com/superedge/superedge">
+		Download <i class="fab fa-github ml-2 "></i>
+	</a>
+	<br>
+	{{< blocks/link-down color="white" >}}
+</div>
+{{< /blocks/cover >}}
+
+
+{{% blocks/lead color="primary" %}}
+SuperEdge is an open-source container management system for edge computing. It extends native Kubernetes to the edge in a non-intrusive way.
+{{% /blocks/lead %}}
+
+
+<!-- Key Features Block -->
+{{< blocks/section color="gray-dark" >}}
+
+<div class="col-12">
+<h1 class="text-center"><b>Key Features</b></h1>
+<br>
+<br>
+</div>
+
+{{% blocks/feature icon="fas fa-cloud" title="Cloud Native" %}}
+Supports all native Kubernetes APIs and resources.
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fas fa-cogs" title="Edge Autonomy" %}}
+
+L3 edge autonomy for unstable network between cloud and edge hosts.
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fas fa-bell" title="Distributed Health Check" url="/docs/reference/edge-health/" %}}
+Build-in edge-side health monitoring for more accurate health-check to maintain edge autonomy.
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fas fa-object-group" title="ServiceGroup" url="/docs/components/servicegroup/" %}}
+Provides new workload unit to orchestrate container application in a closed-looped network by region. Canary deployment is supported.
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fas fa-exchange-alt" title="Network Tunneling" url="/docs/components/tunnel/" %}}
+Tunnel between kube-apiserver on the cloud and kubelet at the edge.
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fas fa-tools" title="Edgeadm Installer" url="/docs/installation/install-via-edgeadm/" %}}
+Provides edgeadm to bootstrap an edge Kubernetes cluster.
+{{% /blocks/feature %}}
+
+{{< /blocks/section >}}
+
+<!-- Community info -->
+{{< blocks/section >}}
+{{% blocks/feature icon="fas fa-comments" title="Join community forum!" %}}
+Visit [SuperEdge Forum](https://groups.google.com/g/superedge) for announcement and technical Discussions.
+{{% /blocks/feature %}}
+
+
+{{% blocks/feature icon="fab fa-github" title="Contributions are welcome!" %}}
+Create a [Pull Request](https://github.com/superedge/superedge/pulls) on GitHub to get started.<br>
+New users are always welcome!
+{{% /blocks/feature %}}
+
+
+{{% blocks/feature icon="fab fa-slack" title="Join us on Slack!" %}}
+Join [SuperEdge Slack Community](https://join.slack.com/t/superedge-workspace/shared_invite/zt-qclaoruf-pj8iKImmJnaJpfrUJBNleg)<br>
+for live conversation and quick questions.
+{{% /blocks/feature %}}
+
+{{< /blocks/section >}}
+
+
+<!-- List of creators and co-founders  -->
+{{< blocks/section  background-color="#60A1E3">}}
+<section class="member-section">
+	<h2><b>Created By</b></h2>
+	<div class="members">
+		<div class="created-by-list">
+				<img class="created-by_logo" src="_resources/logos/Tencent_Cloud_EN_color.png" alt="Tencent Cloud Logo" >
+		</div>
+	</div>
+	<br>
+
+	<h2><b>Co-Launching Members</b></h2>
+
+	<div class="members">
+	    <div class="member-list">
+	        <img class="member-logo" src="_resources/logos/VMware_EN.png" alt="VMware Logo" >
+	    </div>
+			<div class="member-list">
+					<img class="member-logo" src="_resources/logos/Intel_EN.png" alt="Intel Cloud Logo" >
+			</div>
+			<div class="member-list">
+					<img class="member-logo" src="_resources/logos/Cambricon.png" alt="Camrbicon Logo" >
+			</div>
+			<div class="member-list">
+					<img class="member-logo" src="_resources/logos/Huya_EN.png" alt="Huya Logo" >
+			</div>
+			<div class="member-list">
+					<img class="member-logo" src="_resources/logos/Meituan_EN.png" alt="Meituan Logo" >
+			</div>
+			<div class="member-list">
+					<img class="member-logo" src="_resources/logos/CDS_ZH.png" alt="CDS Logo" >
+			</div>
+	</div>
+</section>
+
+{{< /blocks/section >}}

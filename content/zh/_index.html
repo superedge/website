@@ -1,0 +1,121 @@
++++
+title = "SuperEdge"
+linkTitle = "SuperEdge"
+
++++
+
+{{< blocks/cover image_anchor="top" height="" color="white" >}}
+<div class="mx-auto">
+	<div style="display:flex; flex-direction: row; justify-content: center; flex-wrap: wrap;width:100%;">
+		<figure style="max-width:800px">
+			<img src="_resources/images/superedge-logo_white.png" alt="SuperEdge Logo" style='max-width:100%'>
+		</figure>
+	</div>
+	<a class="btn btn-lg btn-primary mr-3 mb-4" href="{{< relref "/docs" >}}">
+		更多 <i class="fas fa-arrow-alt-circle-right ml-2"></i>
+	</a>
+	<a class="btn btn-lg btn-secondary mr-3 mb-4" href="https://github.com/superedge/superedge">
+		下载 <i class="fab fa-github ml-2 "></i>
+	</a>
+	<br>
+	{{< blocks/link-down color="white" >}}
+</div>
+{{< /blocks/cover >}}
+
+
+{{% blocks/lead color="primary" %}}
+SuperEdge 是一个基于原生 Kubernetes 的边缘容器方案。以无侵入的方式，将Kubernetes强大的容器管理能力扩展到边缘计算场景中。
+{{% /blocks/lead %}}
+
+
+<!-- Key Features Block -->
+{{< blocks/section color="gray-dark" >}}
+
+<div class="col-12">
+<h1 class="text-center"><b>关键特性</b></h1>
+<br>
+<br>
+</div>
+
+{{% blocks/feature icon="fas fa-cloud" title="云原生" %}}
+支持所有原生 Kubernetes APIs 和资源
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fas fa-cogs" title="边缘自治"  %}}
+提供 L3 级的边缘自治以应对云边不稳定网络
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fas fa-bell" title="分布式健康检查" url="/zh/docs/components/edge-health/" %}}
+将节点健康检查下沉到边缘端以支持边缘区域自治
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fas fa-object-group" title="服务组" url="/zh/docs/components/servicegroup/" %}}
+提供区域闭环的边缘应用管理及灰度发布能力
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fas fa-exchange-alt" title="云边隧道" url="/zh/docs/components/tunnel/" %}}
+打通云端与边端网络隧道
+{{% /blocks/feature %}}
+
+{{% blocks/feature icon="fas fa-tools" title="Edgeadm 安装工具" url="/zh/docs/installation/install-via-edgeadm/" %}}
+提供简易安装工具用以创建边缘 Kubernetes 集群
+{{% /blocks/feature %}}
+
+{{< /blocks/section >}}
+
+<!-- Community info -->
+{{< blocks/section >}}
+{{% blocks/feature icon="fas fa-comments" title="网上论坛" %}}
+加入 [SuperEdge 论坛](https://groups.google.com/g/superedge)
+{{% /blocks/feature %}}
+
+
+{{% blocks/feature icon="fab fa-github" title="欢迎加入" %}}
+参与项目并创建 [Pull Request](https://github.com/superedge/superedge/pulls)<br>
+欢迎新同学加入！
+{{% /blocks/feature %}}
+
+
+{{% blocks/feature icon="fab fa-slack" title="加入 Slack" %}}
+加入 [SuperEdge Slack 社区讨论](https://join.slack.com/t/superedge-workspace/shared_invite/zt-qclaoruf-pj8iKImmJnaJpfrUJBNleg)<br>
+{{% /blocks/feature %}}
+
+{{< /blocks/section >}}
+
+
+<!-- List of creators and co-founders  -->
+{{< blocks/section  background-color="#60A1E3">}}
+<section class="member-section">
+	<h2><b>项目创建</b></h2>
+	<div class="members">
+		<div class="created-by-list">
+				<img class="created-by_logo" src="_resources/logos/Tencent_Cloud_EN_color.png" alt="Tencent Cloud Logo" >
+		</div>
+	</div>
+	<br>
+
+	<h2><b>共同发起</b></h2>
+
+	<div class="members">
+	    <div class="member-list">
+	        <img class="member-logo" src="_resources/logos/VMware_EN.png" alt="VMware Logo" >
+	    </div>
+			<div class="member-list">
+					<img class="member-logo" src="_resources/logos/Intel_EN.png" alt="Intel Cloud Logo" >
+			</div>
+			<div class="member-list">
+					<img class="member-logo" src="_resources/logos/Cambricon.png" alt="Camrbicon Logo" >
+			</div>
+			<div class="member-list">
+					<img class="member-logo" src="_resources/logos/Huya_ZH.png" alt="Huya Logo" >
+			</div>
+			<div class="member-list">
+					<img class="member-logo" src="_resources/logos/Meituan_ZH.png" alt="Meituan Logo" >
+			</div>
+			<div class="member-list">
+					<img class="member-logo" src="_resources/logos/CDS_ZH.png" alt="CDS Logo" >
+			</div>
+	</div>
+</section>
+
+{{< /blocks/section >}}

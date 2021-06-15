@@ -1,0 +1,8 @@
+# Hugo
+public/
+resources/
+node_modules/
+tech-doc-hugo
+
+# General
+.DS_Store

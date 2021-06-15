@@ -1,0 +1,114 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: edge-health-admission
+  namespace: edge-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: edge-health-admission
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+    verbs:
+      - "*"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: edge-health-admission
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edge-health-admission
+subjects:
+  - kind: ServiceAccount
+    name: edge-health-admission
+    namespace: edge-system
+---
+apiVersion: v1
+data:
+  server.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURYekNDQWtlZ0F3SUJBZ0lKQUovcUhvQ0ptUnNwTUEwR0NTcUdTSWIzRFFFQkJRVUFNRnN4Q3pBSkJnTlYKQkFZVEFrTk9NUkl3RUFZRFZRUUlEQWxIZFdGdVoyUnZibWN4RVRBUEJnTlZCQWNNQ0ZOb1pXNTZhR1Z1TVJBdwpEZ1lEVlFRS0RBZFVaVzVqWlc1ME1STXdFUVlEVlFRRERBcHpkWEJsY2kxbFpHZGxNQjRYRFRJeE1EVXhOekUwCk1qa3pORm9YRFRNMU1ERXlOREUwTWprek5Gb3dJREVlTUJ3R0ExVUVBd3dWWldSblpTMW9aV0ZzZEdndFlXUnQKYVhOemFXOXVNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQXc5Z2lmY05QNkJPSQo1dVRLTWszUXZrOGQycm1lS2RsQTZoTTFCUUdrRjRpeG5ldlN6RUFScmR6V2ZDRzZFOGZnR0pGM0V6ZzI5L3FVCndGR2JKL1d5TVRWdDVoOU95ZlZZQ0dYeTlMZ1hBVlF5UVowRmpUajhTTkN5V014YnhxUk00Rks1dlNxUndKRzAKanh3TGF4c0pHejBpWEdCL3I4eHhiMFUxeDY0RXFkSW9ZY0tCL2ZQNnpxNzMxR2JKMDM2eVlnb0dVV1JZcHJJVApNRU1yNUt0SDBUZ1BLb3VQbVFBcHNJeHlSelpqYnFPU3N5WUQxUVljcytmdEJ1bEl0b25DUHB3TExoNjJpckZICmp6VVJvR0EvQmppWFZPVWZlZFJqemJtWFR3dUZ5cDBwRUEzZHVyWC8xeURsS2w2SUpvM1hXS0xERlRsd29yb3kKUVZhZG8zd1Ywd0lEQVFBQm8yRXdYekFKQmdOVkhSTUVBakFBTUFzR0ExVWREd1FFQXdJRjREQVRCZ05WSFNVRQpEREFLQmdnckJnRUZCUWNEQVRBd0JnTlZIUkVFS1RBbmdpVmxaR2RsTFdobFlXeDBhQzFoWkcxcGMzTnBiMjR1ClpXUm5aUzF6ZVhOMFpXMHVjM1pqTUEwR0NTcUdTSWIzRFFFQkJRVUFBNElCQVFBSU94Y2krenVGU0hsazZMSUcKWDRYREN5b0FlMFVBVWs0dlhLQWpSc3dZZFpsMEl6VmtQNWQ5Y2lmdXFLWHVnbXd5N1RkeldmK1FJSEFFai96Wgp6anVXc2U3cXZGSWQ1ZmdleWd3OGJvSlBwdGRFVldVaklaRUdUTVJ3OVhCZjJWeExBdnF6VStzTFRXOGViY0xyClk4TEQ4aWlTSGdaM0NiVHNqekwrUGRHSkRWcWtLVHNxK1A4Y0dTMzFXazgyaFduQUFnS1RJaW5xT1BFd2RYN0wKblh4U0lpK1dRVEFQZzdpNEQ3L1E2WW12K1hLN2lWYVFOR1VVcGFkRHNYcllsS3RQaExKMkx5NDduRGRtTkdHbwo0VFZYY1ExZ0FEWFo1RTFhSWNrVURLVEJoOUxLL3ExSW5YT2IraDk4aU80aFJIaXNmZFhVOWJ3OEt1YjBoRG1OClluSkEKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+  server.key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBdzlnaWZjTlA2Qk9JNXVUS01rM1F2azhkMnJtZUtkbEE2aE0xQlFHa0Y0aXhuZXZTCnpFQVJyZHpXZkNHNkU4ZmdHSkYzRXpnMjkvcVV3RkdiSi9XeU1UVnQ1aDlPeWZWWUNHWHk5TGdYQVZReVFaMEYKalRqOFNOQ3lXTXhieHFSTTRGSzV2U3FSd0pHMGp4d0xheHNKR3owaVhHQi9yOHh4YjBVMXg2NEVxZElvWWNLQgovZlA2enE3MzFHYkowMzZ5WWdvR1VXUllwcklUTUVNcjVLdEgwVGdQS291UG1RQXBzSXh5UnpaamJxT1NzeVlECjFRWWNzK2Z0QnVsSXRvbkNQcHdMTGg2MmlyRkhqelVSb0dBL0JqaVhWT1VmZWRSanpibVhUd3VGeXAwcEVBM2QKdXJYLzF5RGxLbDZJSm8zWFdLTERGVGx3b3JveVFWYWRvM3dWMHdJREFRQUJBb0lCQUFYL1hYY0tmeXoxUkRFRgorcWMxdU5uTEpIZnBUVTJzeUk4aWpYSWN6Y0Ntd0FHOUVoU05OYjFrVVBFMk96T1Y0R2dBTkd4VFFXT3d1ZE4xCjdGRjU5YjRLQzlhTFNPZG9hd3kreW9UeUNrcFJJTVRmb1NibEF0emIvMG8yMyt5aVpYUk5ORUQxeDhiazcybWUKaXo3NWNmcnlrVlhRNHJnb2c2VExzc3p0cUZqbTkvdDJqQXExM1dFeURlUjl0VUJEMTQxUHBkellTTHBuSGlaZgpyQzBjUFowTmJiTkJ2NG11dytjZnQxaFZKcFo4MWhxOGhRcHNhZDlJWkxQRGxMaklPbXVBZDFPcXNDY1ZrS0FhCloveFNESDBaV3pUV1U0ZTBiWEVyQ3dDOWE3MWtmUHNTUHMvbFI2akFsb2prKzAzSGRPVldScUVuL210TzdzWk4KNFdxOTFVa0NnWUVBNWhkU0RjY2NHRlVjLzRDbUI1ek5iNTNPTTI5a0lLVG9ETUJ3UHkrMEE3S1VoV2NoSGhOSQpLNEw1d1k1bWJmSDZlNDcrd2NDbVUrd09vVHh5YlVsQ3U4elJCNGE5bE14VFVoOURJeG54UzNMNHhjNDVORlhVCkhpejBFZmkvcUJDTlZQdHpLZTFGNVZRWkxHTnJHYmVFUjljSXZqK2JQLzAweUt5YnA3UmJvNGNDZ1lFQTJlV2EKdk1KbUdHd2ZLUnhSYi9IdDMwRldsbnkwWVAzYXlxM1diUTJ3b3Z0dHZma1BBNFFtUUlVZms4TFRhYndBSWtyNgpRcGpZS0RxOW5tenVjTDdyQ0lVUmNoa253WGcvbzFYSzQ1Y2pkczhYZVBxdFp2MjlpdkR3M2dPM0U5VlVSdTlVCmIycHgwWXdPRUJiOUdhUWhVN1cveDIwU2Nnc0NSdHN2RWVxaFpsVUNnWUFFcEMvSmkxeXJ1UHZPdzUrVnc3bjUKS0d2Q2FkclJOY0pnajNrMExSZ3FndTJ3Q3phRnpzbkQ1dTUyMHhLSjRUbTJTRm9uT21XZ2g4Qjd6Q1phd2dHUQpuRDhUTWNxZE44bnVmQ2IwakU5cndEUDRlWUo1NWNsVG1vQ0o1RVNwZFR3RW5OWGo0SjlxVXRuM0pVSkIwSXZnCmp4dmtDcEJ0S0FScWorREw3ejF4L1FLQmdRQ2lXS1VDc0tDYTM2d1QyRXFBNnJNOW5SUGppY1JuWTV4cFdENGsKQUlnejFyczhTTjI3MC9FZ0wwK0lxeWNUWjRSK0NIa1B0NHVONWI0ejFKdVBHMkJJZDhTNHl5OUl3Y3hBYVFLQwpzYkExckRTajZibmF1NEZHalNBWmVwRWtVTlM3Q1VSU3d1OU1ubG8zK0xqWkt1VzkxZk91cFlDUndjd1BlTzFJCkh4WGtCUUtCZ1FDOTZnbnQ0eFRnRjFXTER4am81eWFCQUpaQ0FLWUdJZFRncmV5TGM5bTVxWVZIZ243cGdNQ0MKQkZXbW1KU1pMY3dTUEt1emcwSzVEdC85MTNJaHZWYU81eE9kZDhBcmVvRlRKTWhKcnhnR2hnS0VFaDdicXNnbgpWLzlxNTE3ZlBITW5jUmd0K1drY043L3VUbGNmM2w5dUlXWmlicWtyVmJmOVNwNXNHMCtFVXc9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo=
+kind: Secret
+metadata:
+  name: validate-admission-control-server-certs
+  namespace: edge-system
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edge-health-admission
+  namespace: edge-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: edge-health-admission
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        k8s-app: edge-health-admission
+    spec:
+      containers:
+        - name: edge-health-admission
+          image: superedge/edge-health-admission:v0.3.0
+          imagePullPolicy: Always
+          command:
+            - edge-health-admission
+          args:
+            - --alsologtostderr
+            - --v=4
+            - --admission-control-server-cert=/etc/edge-health-admission/certs/server.crt
+            - --admission-control-server-key=/etc/edge-health-admission/certs/server.key
+          env:
+            - name: MASTER_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+          volumeMounts:
+            - mountPath: /etc/edge-health-admission/certs
+              name: admission-server-certs
+          resources:
+            limits:
+              cpu: 50m
+              memory: 100Mi
+            requests:
+              cpu: 10m
+              memory: 20Mi
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+        - secret:
+            secretName: validate-admission-control-server-certs
+          name: admission-server-certs
+      nodeSelector:
+        node-role.kubernetes.io/master: ""
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+      serviceAccountName: edge-health-admission
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edge-health-admission
+  namespace: edge-system
+spec:
+  ports:
+    - port: 443
+      protocol: TCP
+      targetPort: 8443
+  selector:
+    k8s-app: edge-health-admission
+  type: ClusterIP
