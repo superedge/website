@@ -30,7 +30,7 @@ description: >
 
 - 将边缘集群回退成普通集群: `edgeadm revert --kubeconfig admin.kubeconfig`
 
-- [**edgeadm 详细使用**](/zh/docs/installation/install-via-edgeadm/)
+- [**edgeadm 详细使用**](/zh/docs/installation/how-to-bootstrap-an-edge-kubernetes-cluster/)
 
 ## 手工部署
 

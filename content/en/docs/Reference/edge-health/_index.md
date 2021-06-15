@@ -1,6 +1,6 @@
 ---
-title: "Edge-health"
-linkTitle: "Edge-health"
+title: "edge-health"
+linkTitle: "edge-health"
 main_menu: true
 weight: 2
 description: >

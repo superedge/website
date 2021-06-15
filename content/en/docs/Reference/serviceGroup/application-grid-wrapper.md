@@ -4,4 +4,4 @@ description: >
   ApplicationGrid wrapper sample config
 ---
 
-{{< codenew file="application-grid/application-grid-wrapper.yaml" >}}
+{{< codenew file="serviceGroup/application-grid-wrapper.yaml" >}}

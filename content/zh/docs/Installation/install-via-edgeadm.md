@@ -129,8 +129,10 @@ Kubeadm Cluster Revert To Edge Cluster Success!
 
 比如：修改了edge-health的代码，先将编译出的镜像推送到私有镜像仓库，然后部署自己编译出来的镜像 edge-health:0.1.0
 1. 修改 ./manifests/edge-health.yaml， 将镜像换成修改后的
-<div align="left">
-  <img src="../img/edit-edge-health.png" width=70% title="edit dege health">
+<div align="center">
+  <img src="/images/docs/edit-edge-health.png" width=90% title="edit dege health">
+  <br>
+  <br>
 </div>
 
 2. 然后用change 命令重新转化edge cluster
@@ -138,8 +140,10 @@ Kubeadm Cluster Revert To Edge Cluster Success!
 [root@master01 ~]# edgeadm change -m ./manifests/
 ```
 3. 查看edge-health的pod, 镜像已经变成自定义的：
-<div align="left">
-  <img src="../img/view-edge-health.png" width=70% title="view edge health">
+<div align="center">
+  <img src="/images/docs/view-edge-health.png" width=90% title="view edge health">
+  <br>
+  <br>
 </div>
 
 

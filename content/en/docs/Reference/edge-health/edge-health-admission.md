@@ -4,4 +4,4 @@ description: >
   Edge-health admission sample config
 ---
 
-{{< codenew file="application-grid/edge-health-admission.yaml" >}}
+{{< codenew file="edge-health/edge-health-admission.yaml" >}}

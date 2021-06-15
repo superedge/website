@@ -4,4 +4,4 @@ description: >
   ApplicationGrid controller 配置示例
 ---
 
-{{< codenew file="application-grid/application-grid-controller.yaml" >}}
+{{< codenew file="serviceGroup/application-grid-controller.yaml" >}}

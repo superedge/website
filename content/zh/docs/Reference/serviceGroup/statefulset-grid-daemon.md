@@ -4,4 +4,4 @@ description: >
   Statefulset-grid daemon 配置示例
 ---
 
-{{< codenew file="application-grid/statefulset-grid-daemon.yaml" >}}
+{{< codenew file="serviceGroup/statefulset-grid-daemon.yaml" >}}

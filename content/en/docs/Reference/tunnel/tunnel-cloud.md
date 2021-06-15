@@ -4,4 +4,4 @@ description: >
   Tunnel-cloud Sample config
 ---
 
-{{< codenew file="application-grid/tunnel-cloud.yaml" >}}
+{{< codenew file="tunnel/tunnel-cloud.yaml" >}}

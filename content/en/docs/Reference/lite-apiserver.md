@@ -5,4 +5,4 @@ description: >
   lite-apiserver sample config
 ---
 
-{{< codenew file="application-grid/lite-apiserver.yaml" >}}
+{{< codenew file="lite-apiserver/lite-apiserver.yaml" >}}

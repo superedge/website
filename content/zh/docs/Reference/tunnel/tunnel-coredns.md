@@ -4,4 +4,4 @@ description: >
   Tunnel CoreDNS 配置示例
 ---
 
-{{< codenew file="application-grid/tunnel-coredns.yaml" >}}
+{{< codenew file="tunnel/tunnel-coredns.yaml" >}}

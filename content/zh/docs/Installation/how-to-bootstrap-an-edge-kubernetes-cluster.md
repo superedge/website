@@ -65,7 +65,9 @@ description: >
 我们研究了kubeadm的源码，发现可以借用kubeadm创建原生Kubernetes集群、join节点、workflow思想来一键部署边缘 Kubernetes集群，并且可以分步去执行安装步骤。这正是我们想要的简单、灵活、低学习成本的部署方案。于是我们站在巨人的肩膀上，利用Kubedam的思想，复用kubeadm的源码，设计出了如下的解决方案。
 
 <div align="center">
-  <img src="../img/edgeadm-init-arch.png" width=50% title="edgeadm-init-arch Architecture">
+  <img src="/images/docs/edgeadm-init-arch.png" width=80% title="edgeadm-init-arch Architecture">
+  <br>
+  <br>
 </div>
 
 >   其中 `kubeadm init cluster/join node`部分完全复用了kubadm的源码，所有逻辑和kubeadm完全相同。
@@ -96,9 +98,7 @@ description: >
 
 ## 3. 用 edgeadm 安装边缘 Kubernetes 集群
 
-以下流程社区已经录制了详细教程视频，可结合文档进行安装：
-
-[![video-edgeadm-install-edge-kubernetes_CN](../img/video-edgeadm-install-edge-kubernetes_CN.png)](https://www.bilibili.com/video/BV1kA411G73i)
+详细教程视频请见 [edgeadm一键安装教程](https://www.bilibili.com/video/BV1kA411G73i)，可结合文档进行安装。
 
 #### <1>. 安装条件
 

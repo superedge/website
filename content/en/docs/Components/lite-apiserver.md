@@ -2,7 +2,7 @@
 title: "lite-apiserver"
 linkTitle: "lite-apiserver"
 description: >
-  A light-weight version of the kube-apiserver running on the edge nodes. It acts as a proxy for requests from all components and pods on the edge node to the cloud apiserver, and caches the responses to achieve edge autonomy in case of the disconnected cloud-edge network
+  A light-weight version of the kube-apiserver running on the edge nodes. It acts as a proxy for requests from all components and pods on the edge node to the cloud apiserver, and caches the responses to achieve edge autonomy in case of the disconnected cloud-edge network.
 ---
 
 `lite-apiserver` has the following functionalities:

@@ -35,7 +35,7 @@ description: >
   根据 Client 的类型分别缓存 Get 和 List 的结果数据，并根据 Watch 的返回值，更新对应的 List 数据。
 
 ## 使用说明
-可使用static pod或者systemd在边缘节点上部署lite-apiserver，参见[edgeadm](/zh/docs/installation/install-via-edgeadm/)或[手动部署文档](/zh/docs/installation/install-manually/)
+可使用static pod或者systemd在边缘节点上部署lite-apiserver，参见[edgeadm](/zh/docs/installation/how-to-bootstrap-an-edge-kubernetes-cluster/)或[手动部署文档](/zh/docs/installation/install-manually/)
 
 ## 边缘自治示例
 1. 根据使用说明部署`lite-apiserver`

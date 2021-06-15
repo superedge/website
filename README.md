@@ -37,7 +37,7 @@ Most of the documentation lives in:
 
 For example,
 ```
-{{< codenew file="application-grid/edge-health-admission.yaml" >}}
+{{< codenew file="serviceGroup/edge-health-admission.yaml" >}}
 ```
 
 ## Deployments and PR previews
