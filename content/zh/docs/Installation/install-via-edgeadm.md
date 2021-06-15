@@ -1,5 +1,5 @@
 ---
-title: "使用 edgeadm 安部署"
+title: "使用 edgeadm 安装部署"
 linkTitle: "使用 edgeadm 部署"
 description: >
 
