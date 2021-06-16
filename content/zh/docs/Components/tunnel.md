@@ -2,7 +2,7 @@
 title: "tunnel"
 linkTitle: "tunnel"
 description: >
-  云端隧道 - 提供云端到边端的网络链接隧道。
+  云端隧道 - 提供云端与边端的网络链接隧道。
 ---
 
 Tunnel 包括 **tunnel-cloud** 和 **tunnel-edge** 两个组件。作为云边通信的桥梁，负责在云和边之间维护一套稳定的网络连接。它打通云端和无公网暴露的边端节点去实现 Kubernetes 一致的节点运维和管理。

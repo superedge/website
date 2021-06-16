@@ -2,10 +2,10 @@
 title: "tunnel"
 linkTitle: "tunnel"
 description: >
-  A network tunnel to proxy cloud-to-edge network connection.
+  A network tunnel to proxy network requests between cloud and edge.
 ---
 
-Tunnel acts as the bridge between edge and cloud. It consists of **tunnel-cloud** and **tunnel-edge**, which is responsible for maintaining persistent cloud-to-edge network connection. It allows edge nodes without public IP address to be managed by Kubernetes on the cloud for unified operation and maintenance.
+Tunnel acts as the bridge between edge and cloud. It consists of **tunnel-cloud** and **tunnel-edge**, which is responsible for maintaining persistent cloud-to-edge network connection. It allows edge nodes with no public IP assigned to be managed by Kubernetes on the cloud to obtain unified and centralized operation and maintenance.
 
 ## Architecture Diagram
 
