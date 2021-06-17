@@ -1,4 +1,4 @@
-baseURL = "/"
+baseURL = "https://superedge.io"
 title = "SuperEdge"
 
 enableRobotsTXT = true
@@ -25,7 +25,7 @@ pygmentsUseClasses = false
 pygmentsUseClassic = false
 #pygmentsOptions = "linenos=table"
 # See https://help.farbox.com/pygments.html
-pygmentsStyle = "tango"
+pygmentsStyle = "emacs"
 
 # Configure how URLs look like per section.
 [permalinks]
@@ -53,16 +53,16 @@ anchor = "smart"
 
 [languages]
 [languages.en]
-title = ""
-description = "SuperEdge Official site"
+title = "SuperEdge"
+description = "Edge-native container management system"
 languageName = "English"
 # Weight used for sorting.
 weight = 1
 
 ## Work in progress
 [languages.zh]
-title = ""
-description = "SuperEdge 官网"
+title = "SuperEdge"
+description = "边缘原生容器管控系统"
 languageName = "中文 Chinese"
 contentDir = "content/zh"
 # time_format_default = "02.01.2006"
@@ -75,7 +75,8 @@ weight = 2
       unsafe = true
   [markup.highlight]
       # See a complete list of available styles at https://xyproto.github.io/splash/docs/all.html
-      style = "tango"
+      style = "emacs"
+      tabWidth = 4
       # Uncomment if you want your chosen highlight style used for code blocks without a specified language
       # guessSyntax = "true"
 
