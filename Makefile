@@ -12,11 +12,10 @@ serve:
 
 .PHONY: deploy-preview
 deploy-preview: load-submodule ## Deploy preview site via netlify
-	hugo --gc --minify --enableGitInfo --buildFuture -b $(DEPLOY_PRIME_URL)
+	hugo --minify --enableGitInfo --buildFuture -b $(DEPLOY_PRIME_URL)
 
 .PHONY: production-deploy
 production-deploy: load-submodule ## Builds production build.
 	hugo \
-		--gc \
 		--minify \
 		--enableGitInfo
