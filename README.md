@@ -15,7 +15,6 @@ This repo contains the assets used to build the SuperEdge website at https://sup
 git clone https://github.com/superedge/website.git
 cd website
 npm install
-git submodule update --init --recursive --depth 1
 make load-submodule
 ```
 
