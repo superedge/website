@@ -113,6 +113,10 @@ url_latest_version = "https://superedge.io"
 
 # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
 github_repo = "https://github.com/superedge/website"
+
+# For codenew shortcode
+githubWebsiteRaw = "raw.githubusercontent.com/superedge/website"
+
 # An optional link to a related project repo. For example, the sibling repository where your product code lives.
 github_project_repo = "https://github.com/superedge/superedge"
 
