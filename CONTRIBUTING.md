@@ -1,28 +1,49 @@
 # How to Contribute
 
-We'd love to accept your patches and contributions to this project. There are
-just a few small guidelines you need to follow.
+Welcome to SuperEdge! We'd love your contribution! Here are a few small guidelines.  
 
-## Contributor License Agreement
+## Code of Conduct
+Please do check our [Code of Conduct](./CODE_OF_CONDUCT.md) before making contributions.
 
-Contributions to this project must be accompanied by a Contributor License
-Agreement. You (or your employer) retain the copyright to your contribution;
-this simply gives us permission to use and redistribute your contributions as
-part of the project. Head over to <https://cla.developers.google.com/> to see
-your current agreements on file or to sign a new one.
+## Certificate of Origin
+We require all commits to be signed with [DCO](https://developercertificate.org) to certify that the contributors wrote or otherwise have the right to submit the code they are contributing to the project.
 
-You generally only need to submit a CLA once, so if you've already submitted one
-(even if it was for a different project), you probably don't need to do it
-again.
+`Signed-off-by: Random J Developer <random@developer.example.org>
+`
 
-## Code reviews
+## Contributing to SuperEdge Documentation
 
-All submissions, including submissions by project members, require review. We
-use GitHub pull requests for this purpose. Consult
-[GitHub Help](https://help.github.com/articles/about-pull-requests/) for more
-information on using pull requests.
+### Reporting Issues
 
-## Community Guidelines
+If you see a documentation issue or requests for SuperEdge website:
 
-This project follows
-[Google's Open Source Community Guidelines](https://opensource.google.com/conduct/).
+1. Check the [issue list](https://github.com/superedge/website/issues) for any existing issues.
+2. Create [issue](https://github.com/superedge/website/issues/new/choose) using existing template.
+
+### Submitting Pull Requests
+
+SuperEdge website contains assets to build the SuperEdge website. It includes:
+* Documentation: Project guidance and user reference
+* Blog: Use cases, community announcements
+
+If you're fixing an issue or want to add new content to the SuperEdge website, submit a PR against the main branch.
+
+* Fork [superedge/website](https://github.com/superedge/website)
+* Modify the website code and push to your fork.
+* Submit PR against the SuperEdge main branch.
+
+#### Guidelines for Pull requests
+
+* Add label to your PR regarding the language of the documentation. `language/en` for English or `language/zh` for Chinese.
+* Create smaller PRs that focus on addressing a single issue.
+* Link to a GitHub issue if it exists.
+* Provide good PR description on what change to make.
+* Maintain clean commit history with meaningful commit messages.
+* Resolve any merge conflicts with main branch. Or we can't merge your change.
+
+
+## Communication
+
+For real time discussion, join us on [Slack](https://join.slack.com/t/superedge-workspace/shared_invite/zt-qclaoruf-pj8iKImmJnaJpfrUJBNleg).
+
+To discuss ideas and requests, please go to [SuperEdge Forum](https://groups.google.com/g/superedge) or submit an [GitHub Issue](https://github.com/superedge/website/issues/new/choose).
