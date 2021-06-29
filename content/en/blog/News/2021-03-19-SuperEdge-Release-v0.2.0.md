@@ -1,6 +1,6 @@
 ---
-title: "Release v0.2.0 / 2021-03-19"
-linkTitle: "v0.2.0"
+title: "SuperEdge v0.2.0 Release is Available"
+linkTitle: "SuperEdge v0.2.0 Release"
 date: 2021-03-19
 description: >
     SuperEdge v0.2.0 Release Notes.
