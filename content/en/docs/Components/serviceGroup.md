@@ -1,25 +1,20 @@
----
-title: "serviceGroup"
-linkTitle: "serviceGroup"
-description: >
-  A management unit for managing application deployment and traffic by regions.
----
+# ServiceGroup
 
-## Why is it needed
+# Why Is It Needed
 
-### Problem to solve
+## What's Different About The Edges
 
-- In edge computing scenarios, multiple edge locations are often managed in the same cluster, and each edge site has one or more computing nodes
+- In edge computing scenarios, multiple edge sites are often managed in the same cluster, and each edge site has one or more computing nodes
 - We hope to run a group of services with business logic relationship in each site, and each site will run the same and complete microservices
-- Due to network restrictions, the access between microservices is not expected and can not be performed in multiple locations
+- Due to network restrictions, the access between microservices is not expected and can not be performed in multiple sites
 
-### How to solve it
+## What Can ServiceGroup Solve
 
-ServiceGroup can easily deploy a group of services in different locations or regions, which belonging to the same cluster,
+ServiceGroup can easily deploy a group of services in different sites or regions, which belonging to the same cluster,
 and make the calls between services complete within site or region, avoiding cross regional access of services.
 
 The native k8s needs to plan the affinity of nodes to control the specific location of the pod created by the deployment.
-When the number of edge locations and the number of services to be deployed are too large, the management and deployment are extremely complex, and even there is only theoretical possibility
+When the number of edge sites and the number of services to be deployed are too large, the management and deployment are extremely complex, and even there is only theoretical possibility
 
 In addition, in order to limit the mutual calls between services to the same site, it is necessary to create a dedicated service for each deployment,
 which brings huge management work and is easy to make mistakes
@@ -27,30 +22,28 @@ which brings huge management work and is easy to make mistakes
 ServiceGroup is designed for this scenario. The deployment-grid, statefulset-grid and service-grid provided by ServiceGroup can be used to easily deploy and manage edge applications, control service flow,
 and ensure the number of services in each region and disaster recovery
 
-## Key Concepts
+# Key Concepts
 
-### Architecture
+## Architecture
 
-<div align="center">
-  <img src="/images/docs/serviceGroup-architecture.png" width=70% title="ServiceGroup Architecture">
-  <br>
-  <br>
+<div align="left">
+  <img src="../img/serviceGroup-UseCase.png" width=70% title="service-group">
 </div>
 
-### NodeUnit
+## NodeUnit
 
 - NodeUnit is usually one or more computing resource instances located in the same edge site. It is necessary to ensure that the intranet of nodes in the same NodeUnit is connected
 - Services in ServiceGroup run within a NodeUnit
 - ServiceGroup allows users to set the number of pods for deployment runs in a NodeUnit
 - ServiceGroup keeps calls between services in its own NodeUnit
 
-### NodeGroup
+## NodeGroup
 
 - NodeGroup contains one or more NodeUnits
 - Ensure that the services in ServiceGroup are deployed on each NodeUnit in NodeGroup
 - When nodeunit is added to the cluster, the service in ServiceGroup is automatically deployed to the newly added NodeUnit
 
-### ServiceGroup
+## ServiceGroup
 
 ServiceGroup contains one or more business services. The applicable scenarios are as follows:
 - Want to package and deploy multiple services
@@ -59,9 +52,9 @@ ServiceGroup contains one or more business services. The applicable scenarios ar
 
 > Note: ServiceGroup is an abstract resource. Multiple ServiceGroups can be created in a cluster
 
-### Resource types
+## Resource Types
 
-#### DeploymentGrid
+### DeploymentGrid
 
 The format of the DeploymentGrid is similar to that of deployment. The < deployment template > field is the template field of
 the Kubernetes original deployment, and the more special is the gridUniqKey field, which indicates the key value of the label of the node group.
@@ -77,7 +70,7 @@ spec:
   <deployment-template>
 ```
 
-#### StatefulSetGrid
+### StatefulSetGrid
 
 The format of the StatefulSetGrid is similar to that of statefulset. The < statefulset template > field is the template field of
 the Kubernetes original statefulset, and the more special is the gridUniqKey field, which indicates the key value of the label of the node group.
@@ -93,7 +86,7 @@ spec:
   <statefulset-template>
 ```
 
-#### ServiceGrid
+### ServiceGrid
 
 The format of ServiceGrid is similar to that of service. The < service template > field is the template field of
 the Kubernetes original service. The special field is the GridUniqKey field, which indicates the key value of the label of the node group.
@@ -109,15 +102,15 @@ spec:
   <service-template>
 ```
 
-## How to use ServiceGroup
+# How To Use ServiceGroup
 
 Taking the deployment of echo-service as an example, we hope to deploy echo-service services in multiple node groups. We need to do the following:
 
-### Determines the unique identity of the ServiceGroup
+## Determines The Unique Identity Of The ServiceGroup
 
 This step is logical planning, and no actual operation is required. For example, we use the UniqKey for the ServiceGroup logical tag to be created as: zone.
 
-### Group edge nodes
+## Group Edge Nodes
 
 In this step, we need to label the edge nodes with kubectl.
 
@@ -127,9 +120,9 @@ For example, we select node12 and node14 and label them with zone = nodeunit1; n
 
 If you want to use more than one ServiceGroup, assign each ServiceGroup a different UniqKey.
 
-### Stateless ServiceGroup
+## Stateless ServiceGroup
 
-#### Deploy DeploymentGrid
+### Deploy DeploymentGrid
 
 ```yaml
 apiVersion: superedge.io/v1
@@ -177,7 +170,7 @@ spec:
           resources: {}
 ```
 
-#### Deploy ServiceGrid
+### Deploy ServiceGrid
 
 ```yaml
 apiVersion: superedge.io/v1
@@ -201,31 +194,31 @@ labeled by zone: zone-0, zone: zone-1, zone: zone-2 for them. at this time, each
 If a service is accessed through servicename and clusterip in the node, the request will only be sent to the nodes in this group.
 
 ```
-[~]## kubectl get dg
+[~]# kubectl get dg
 NAME                  AGE
 deploymentgrid-demo   85s
 
-[~]## kubectl get deploy
+[~]# kubectl get deploy
 NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
 deploymentgrid-demo-zone-0   2/2     2            2           85s
 deploymentgrid-demo-zone-1   2/2     2            2           85s
 deploymentgrid-demo-zone-2   2/2     2            2           85s
 
-[~]## kubectl get svc
+[~]# kubectl get svc
 NAME                   TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
 kubernetes             ClusterIP   172.19.0.1     <none>        443/TCP   87m
 servicegrid-demo-svc   ClusterIP   172.19.0.177   <none>        80/TCP    80s
 
-## execute on zone-0 nodeunit
-[~]## curl 172.19.0.177|grep "node name"
+# execute on zone-0 nodeunit
+[~]# curl 172.19.0.177|grep "node name"
         node name:      node0
 ...
-## execute on zone-1 nodeunit
-[~]## curl 172.19.0.177|grep "node name"
+# execute on zone-1 nodeunit
+[~]# curl 172.19.0.177|grep "node name"
         node name:      node1
 ...
-## execute on zone-2 nodeunit
-[~]## curl 172.19.0.177|grep "node name"
+# execute on zone-2 nodeunit
+[~]# curl 172.19.0.177|grep "node name"
         node name:      node2
 ...
 ```
@@ -233,9 +226,9 @@ servicegrid-demo-svc   ClusterIP   172.19.0.177   <none>        80/TCP    80s
 In addition, if a new NodeUnit that are added to the cluster after the DeploymentGrid and ServiceGrid resources are deployed,
 the system will automatically create the corresponding deployment for the new NodeUnit.
 
-### Stateful ServiceGroup
+## Stateful ServiceGroup
 
-#### Deploy StatefulSetGrid
+### Deploy StatefulSetGrid
 
 ```yaml
 apiVersion: superedge.io/v1
@@ -285,7 +278,7 @@ spec:
 
 **Note that the serviceName field of statefulset template should be set to service to be created.**
 
-#### Deploy ServiceGrid
+### Deploy ServiceGrid
 
 ```yaml
 apiVersion: superedge.io/v1
@@ -309,31 +302,31 @@ labeled by zone: zone-0, zone: zone-1, zone: zone-2 for them. at this time, each
 If a service is accessed through servicename and clusterip in the node, the request will only be sent to the nodes in this group.
 
 ```
-[~]## kubectl get ssg
+[~]# kubectl get ssg
 NAME                   AGE
 statefulsetgrid-demo   21h
 
-[~]## kubectl get statefulset
+[~]# kubectl get statefulset
 NAME                          READY   AGE
 statefulsetgrid-demo-zone-0   3/3     21h
 statefulsetgrid-demo-zone-1   3/3     21h
 statefulsetgrid-demo-zone-2   3/3     21h
 
-[~]## kubectl get svc
+[~]# kubectl get svc
 NAME                   TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
 kubernetes             ClusterIP   192.168.0.1     <none>        443/TCP   22h
 servicegrid-demo-svc   ClusterIP   192.168.21.99   <none>        80/TCP    21h
 
-## execute on zone-0 nodeunit
-[~]## curl 192.168.21.99|grep "node name"
+# execute on zone-0 nodeunit
+[~]# curl 192.168.21.99|grep "node name"
         node name:      node0
 ...
-## execute on zone-1 nodeunit
-[~]## curl 192.168.21.99|grep "node name"
+# execute on zone-1 nodeunit
+[~]# curl 192.168.21.99|grep "node name"
         node name:      node1
 ...
-## execute on zone-2 nodeunit
-[~]## curl 192.168.21.99|grep "node name"
+# execute on zone-2 nodeunit
+[~]# curl 192.168.21.99|grep "node name"
         node name:      node2
 ...
 ```
@@ -342,48 +335,43 @@ servicegrid-demo-svc   ClusterIP   192.168.21.99   <none>        80/TCP    21h
 
 In addition to the normal service, StatefulSetGrid also provides headless service access as below:
 
-<div align="center">
-  <br>
-  <img src="/images/docs/statefulsetgrid.png" width=70% title="Statefulsetgrid" url="/images/docs/statefulsetgrid.png" >
-  <br>
-  <br>
-</div>
+![](../img/statefulsetgrid.png)
 
 StatefulSet headless service will be access by domains constructed by `{StatefulSetGrid}-{0..N-1}.{ServiceGrid}-svc.ns.svc.cluster.local` which corresponds to actual statefulset workload `{StatefulSetGrid}-{NodeUnit}-{0..N-1}.{ServiceGrid}-svc.ns.svc.cluster.local` of each NodeUnit, aiming to block the difference of NodeUnits.
 
 Each NodeUnit will use the same headless service to access the pod inside its group.(eg: nodes belongs to `NodeUnit：zone-1` will have a access to `statefulsetgrid-demo-zone-1` statefulset and `statefulsetgrid-demo-zone-2` for nodes belongs to `NodeUnit：zone-2`)
 
 ```bash
-## execute on zone-0 nodeunit
-[~]## curl statefulsetgrid-demo-0.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
+# execute on zone-0 nodeunit
+[~]# curl statefulsetgrid-demo-0.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
         pod name:       statefulsetgrid-demo-zone-0-0
-[~]## curl statefulsetgrid-demo-1.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
+[~]# curl statefulsetgrid-demo-1.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
         pod name:       statefulsetgrid-demo-zone-0-1
-[~]## curl statefulsetgrid-demo-2.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
+[~]# curl statefulsetgrid-demo-2.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
         pod name:       statefulsetgrid-demo-zone-0-2
 ...
-## execute on zone-1 nodeunit
-[~]## curl statefulsetgrid-demo-0.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
+# execute on zone-1 nodeunit
+[~]# curl statefulsetgrid-demo-0.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
         pod name:       statefulsetgrid-demo-zone-1-0
-[~]## curl statefulsetgrid-demo-1.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
+[~]# curl statefulsetgrid-demo-1.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
         pod name:       statefulsetgrid-demo-zone-1-1
-[~]## curl statefulsetgrid-demo-2.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
+[~]# curl statefulsetgrid-demo-2.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
         pod name:       statefulsetgrid-demo-zone-1-2
 ...
-## execute on zone-2 nodeunit
-[~]## curl statefulsetgrid-demo-0.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
+# execute on zone-2 nodeunit
+[~]# curl statefulsetgrid-demo-0.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
         pod name:       statefulsetgrid-demo-zone-2-0
-[~]## curl statefulsetgrid-demo-1.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
+[~]# curl statefulsetgrid-demo-1.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
         pod name:       statefulsetgrid-demo-zone-2-1
-[~]## curl statefulsetgrid-demo-2.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
+[~]# curl statefulsetgrid-demo-2.servicegrid-demo-svc.default.svc.cluster.local|grep "pod name"
         pod name:       statefulsetgrid-demo-zone-2-2
 ...
 ```
 
-### Canary deployment
+## Canary Deployment
 Both DeploymentGrid and StatefulSetGrid provide build-in support for **NodeUnit** based canary deployment. User can define multiple workload templates in the `templatePool` and assign them to different NodeUnits so as to roll out different releases in different NodeUnit.  
 
-#### Configuration
+### Configuration
 To use canary deployment, additional fields need to be added to the YAML object:
 * **spec.templatePool**: Defines a template pool for multiple workload templates to be used.
 * **spec.templates**: Assigns the name of the template, which defined in the templatePool, to be used by each NodeUnit. For NodeUnits that don't have template assignment, the `spec.defaultTemplateName` template will be used.
@@ -400,12 +388,12 @@ metadata:
   name: deploymentgrid-demo
   namespace: default
 spec:
-  defaultTemplateName: test1 ## (Optional) Default to "default".
-  autoDeleteUnusedTemplate: false ## (Optional). Default to false.
+  defaultTemplateName: test1 # (Optional) Default to "default".
+  autoDeleteUnusedTemplate: false # (Optional). Default to false.
   gridUniqKey: zone
   template:
-    ...... ## Omit workload spec. If defaultTemplateName is set to default, this template will be used. Otherwise, it will be ignored.
-  templatePool: ## Defines workload templates for NodeUnits
+    ...... # Omit workload spec. If defaultTemplateName is set to default, this template will be used. Otherwise, it will be ignored.
+  templatePool: # Defines workload templates for NodeUnits
     test1:
       replicas: 2
       selector:
@@ -419,9 +407,9 @@ spec:
             appGrid: echo
         spec:
           containers:
-          - image: superedge/echoserver:2.2 ## Old release
+          - image: superedge/echoserver:2.2 # Old release
             name: echo
-            ## Omit container spec
+            # Omit container spec
     test2:
       replicas: 3
       selector:
@@ -435,11 +423,11 @@ spec:
             appGrid: echo
         spec:
           containers:
-          - image: superedge/echoserver:2.3  ## New release
+          - image: superedge/echoserver:2.3  # New release
             name: echo
-            ## Omit container spec
-  templates: ## Assigns workload templates to NodeUnits.
-    ## <NodeUnit_name>: <template_name_from_templatePool>
+            # Omit container spec
+  templates: # Assigns workload templates to NodeUnits.
+    # <NodeUnit_name>: <template_name_from_templatePool>
     zone1: test1
     zone2: test2
 ```
@@ -449,7 +437,198 @@ In this example, the NodeGroup
 - Zone2 will use workload template **test2** with image version `2.3`.
 - Other NodeGroups will use the default template **test1**, which was specified in the `spec.defaultTemplateName`.
 
+## Multi-cluster Distribution
+Supports multi-cluster distribution of DeploymentGrid and ServiceGrid, and also supports multi-regional canary. The current multi-cluster management solution based on [clusternet](https://github.com/clusternet/clusternet)
 
-### Refs
+### Feature
+- Support multi-cluster canary by region
+- Ensure the strong consistency, synchronize update/delete between the control cluster and the managed cluster application, achieve one-time operation, multi-cluster deployment
+- The status of the aggregated distribution instances can be seen in the control cluster
+- Support the supplementary distribution of application in the case of node regional information update: for example, if the cluster does not belong to a nodegroup before, nodegroup is added after the node information is updated, the application in the control cluster will supplement and distribute to the cluster in time
+
+### Prerequisite
+- Kubernetes
+- SuperEdge
+- Clusternet
+
+### Key Concepts
+If you want to specify a deploymentgrid or servicegrid that needs to be distributed by multiple clusters, add 'superedge. IO / Fed' to its label and set it to "yes"
+
+### Examples
+* **Control cluster**: Cluster used to manage other clusters and create application for federation.
+* **Cluster A, Cluster B**: Two managed edge clusters, which are registered and managed through clusternet.
+
+Add nodes in cluster A to nodeunit zone1.
+
+Create a DeploymentGrid in the control cluster, where **superedge.io/fed: "yes"** is added to the labels, indicating that the DeploymentGrid needs to be distributed to managed clusters.
+```yaml
+apiVersion: superedge.io/v1
+kind: DeploymentGrid
+metadata:
+  name: deploymentgrid-demo
+  namespace: default
+  labels:
+    superedge.io/fed: "yes"
+spec:
+  defaultTemplateName: test1
+  gridUniqKey: zone
+  template:
+    replicas: 1
+    selector:
+      matchLabels:
+        appGrid: echo
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          appGrid: echo
+      spec:
+        containers:
+        - image: superedge/echoserver:2.2
+          name: echo
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          resources: {}
+  templatePool:
+    test1:
+      replicas: 2
+      selector:
+        matchLabels:
+          appGrid: echo
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            appGrid: echo
+        spec:
+          containers:
+          - image: superedge/echoserver:2.2
+            name: echo
+            ports:
+            - containerPort: 8080
+              protocol: TCP
+            env:
+              - name: NODE_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: spec.nodeName
+              - name: POD_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              - name: POD_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              - name: POD_IP
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.podIP
+            resources: {}
+    test2:
+      replicas: 3
+      selector:
+        matchLabels:
+          appGrid: echo
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            appGrid: echo
+        spec:
+          containers:
+          - image: superedge/echoserver:2.2
+            name: echo
+            ports:
+            - containerPort: 8080
+              protocol: TCP
+            env:
+              - name: NODE_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: spec.nodeName
+              - name: POD_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              - name: POD_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              - name: POD_IP
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.podIP
+            resources: {}
+  templates:
+    zone1: test1
+    zone2: test2
+```
+
+After the creation is complete, you can see that in the managed cluster A, the corresponding Deployment has been created, and according to its NodeUnit information, there are two instances.
+```bash
+[~]# kubectl get deploy
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deploymentgrid-demo-zone1   2/2     2            2           99s
+```
+If the corresponding field of deployment is manually changed in the managed cluster A, it will be updated back with the template of the control cluster.
+
+Add nodes in cluster B to nodeunit zone2.
+
+The control cluster will distribute the application corresponding to zone2 to the managed cluster B in time.
+```bash
+[~]# kubectl get deploy
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deploymentgrid-demo-zone2   3/3     3            3           6s
+```
+
+View the status of deploymentgrid-demo in the control cluster, you can see the application status of each managed cluster that is aggregated, which is convenient for viewing.
+```yaml
+status:
+  states:
+    zone1:
+      conditions:
+      - lastTransitionTime: "2021-06-17T07:33:50Z"
+        lastUpdateTime: "2021-06-17T07:33:50Z"
+        message: Deployment has minimum availability.
+        reason: MinimumReplicasAvailable
+        status: "True"
+        type: Available
+      readyReplicas: 2
+      replicas: 2
+    zone2:
+      conditions:
+      - lastTransitionTime: "2021-06-17T07:37:12Z"
+        lastUpdateTime: "2021-06-17T07:37:12Z"
+        message: Deployment has minimum availability.
+        reason: MinimumReplicasAvailable
+        status: "True"
+        type: Available
+      readyReplicas: 3
+      replicas: 3
+```
+
+## Refs
 
 * [SEP: ServiceGroup StatefulSetGrid Design Specification](https://github.com/superedge/superedge/issues/26)
