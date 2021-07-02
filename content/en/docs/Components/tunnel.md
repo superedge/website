@@ -1,18 +1,9 @@
----
-title: "tunnel"
-linkTitle: "tunnel"
-description: >
-  A network tunnel to proxy network requests between cloud and edge.
----
-
-Tunnel acts as the bridge between edge and cloud. It consists of **tunnel-cloud** and **tunnel-edge**, which is responsible for maintaining persistent cloud-to-edge network connection. It allows edge nodes with no public IP assigned to be managed by Kubernetes on the cloud to obtain unified and centralized operation and maintenance.
+# Tunnel
+Tunnel acts as the bridge between edge and cloud. It consists of **tunnel-cloud** and **tunnel-edge**, which responsible for maintaining persistent cloud-to-edge network connection. It allows edge nodes without public IP address to be managed by Kubernetes on the cloud for unified operation and maintenance.
 
 ## Architecture Diagram
-
-<div align="center">
-  <img src="/images/docs/tunnel.png" width=60% title="Tunnel Architecture">
-  <br>
-  <br>
+<div align="left">
+  <img src="../img/tunnel.png" width=70% title="tunnel Architecture">
 </div>
 
 ## Implementation
@@ -108,7 +99,7 @@ Tunnel proxy supports either **TCP** or **HTTPS** request forwarding.
 <p>
 
 The **TCP module** will forward the **TCP** request to the [first edge node connected to the cloud](https://github.com/superedge/superedge/blob/main/pkg/tunnel/proxy/tcp/tcp.go#L69). When there is only one **tunnel-edge** connected to the **tunnel-cloud**, The request will be forwarded to the node where the **tunnel-edge** is located
-#### Tunnel-cloud Configuration
+#### Tunnel-cloud Configuration 
 tunnel-cloud-conf.yaml
 ```yaml
 apiVersion: v1

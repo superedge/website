@@ -1,9 +1,6 @@
----
-title: "lite-apiserver"
-linkTitle: "lite-apiserver"
-description: >
-  A light-weight version of the kube-apiserver running on the edge nodes. It acts as a proxy for requests from all components and pods on the edge node to the cloud apiserver, and caches the responses to achieve edge autonomy in case of the disconnected cloud-edge network.
----
+# lite-apiserver
+
+`lite-apiserver` is a light-weight version of the kube-apiserver running on the edge nodes. It acts as a proxy for requests from all components and pods on the edge node to the cloud apiserver, and caches the responses to achieve edge autonomy in case of the disconnected cloud -edge network.
 
 `lite-apiserver` has the following functionalities:
 - Caches request for all edge components (kubelet, kube-proxy, etc.) and pods running on edge nodes
@@ -11,21 +8,17 @@ description: >
 - Caches all kind of Kubernetes resources, including build-in Kubernetes resources and custom resources
 - Support multiple cache storage, including file, kv storage(bolt, badger)
 
-### Architecture
-
-<div align="center">
-  <img src="/images/docs/lite-apiserver.png" width=70% title="lite-apiserver Architecture">
-  <br>
-  <br>
+## Architecture
+<div align="left">
+  <img src="../img/lite-apiserver.png" width=70% title="lite-apiserver Architecture">
 </div>
 
+Overall, `lite-apiserver` start a HTTPS Server  to accepting the request of all Client (HTTPS request). According to the `Common Name` of TLS certificate, use corresponding ReverseProxy to forwarding the request to kube-apiserver (if not mtls certificate request, using default). When the cloud-edge network is normal, the corresponding https response is returned to the client, and it is asynchronously stored in the cache on demand; when the cloud-edge is disconnected, the request to kube-apiserver times out, `lite-apiserver` query cache and return the cache data to client, to achieve the purpose of edge autonomy.
 
-`lite-apiserver` start a HTTPS Server to accept the request of all Client (HTTPS request). According to the `Common Name` of TLS certificate, use corresponding ReverseProxy to forwarding the request to kube-apiserver (if not mtls certificate request, using default). When the cloud-edge network is normal, the corresponding https response is returned to the client, and it is asynchronously stored in the cache on demand; when the cloud-edge is disconnected, the request to kube-apiserver times out, `lite-apiserver` query cache and return the cache data to client, to achieve the purpose of edge autonomy.
+## Usage
+`lite-apiserver` can be run at the edge as Kubernetes pod or systemd service. See [**Installation Guide**](../installation) to get more detail.
 
-### Usage
-`lite-apiserver` can be run at the edge as Kubernetes pod or systemd service. See [**Installation Guide**](/docs/installation) to get more detail.
-
-### Demo
+## Demo
 1. Installing `lite-apiserver`
 2. applying the following yaml to running echoserver
 ```yaml

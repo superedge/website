@@ -1,18 +1,14 @@
----
-title: "tunnel"
-linkTitle: "tunnel"
-description: >
-  云端隧道 - 提供云端与边端的网络链接隧道。
----
 
-Tunnel 包括 **tunnel-cloud** 和 **tunnel-edge** 两个组件。作为云边通信的桥梁，负责在云和边之间维护一套稳定的网络连接。它打通云端和无公网暴露的边端节点去实现 Kubernetes 一致的节点运维和管理。
+# tunnel
+
+tunnel是云边端通信的隧道，分为**tunnel-cloud**和**tunnel-edge**，分别承担云边隧道的两端
+
+## 作用
+- 代理云端访问边缘节点组件的请求，解决云端无法直接访问边缘节点的问题（边缘节点没有暴露在公网中）
 
 ## 架构图
-
-<div align="center">
-  <img src="/images/docs/tunnel.png" width=60% title="Tunnel Architecture">
-  <br>
-  <br>
+<div align="left">
+  <img src="../img/tunnel.png" width=70% title="tunnel Architecture">
 </div>
 
 ## 实现方案
@@ -556,3 +552,12 @@ func Test_TcpClient(t *testing.T) {
 和**TCP模块**调试类似，需要同时加载**HTTPS模块**和**stream模块**
 ### tunnel main()函数的调试
 在tunnel的main的测试文件[tunnel_test](https://github.com/superedge/superedge/blob/main/cmd/tunnel/tunnel_test.go)，需要使用init()设置参数，同时需要使用TestMain解析参数和调用测试方法
+
+
+
+
+
+
+
+
+
