@@ -1,19 +1,14 @@
----
-title: "serviceGroup"
-linkTitle: "serviceGroup"
-description: >
-  边缘应用管理 - 提供区域闭环的边缘应用管理及灰度发布能力。
----
+# 边缘应用管理利器: ServiceGroup
 
-## 功能背景
+# 功能背景
 
-### 边缘特点
+## 边缘特点
 
 - 边缘计算场景中，往往会在同一个集群中管理多个边缘站点，每个边缘站点内有一个或多个计算节点。
 - 同时希望在每个站点中都运行一组有业务逻辑联系的服务，每个站点内的服务是一套完整的功能，可以为用户提供服务
 - 由于受到网络限制，有业务联系的服务之间不希望或者不能跨站点访问
 
-## 操作场景
+# 操作场景
 
 serviceGroup可以便捷地在共属同一个集群的不同机房或区域中各自部署一组服务，并且使得各个服务间的请求在本机房或本地域内部即可完成，避免服务跨地域访问。
 
@@ -23,37 +18,35 @@ serviceGroup可以便捷地在共属同一个集群的不同机房或区域中�
 
 serviceGroup就是为这种场景设计的，客户只需要使用ServiceGroup提供的DeploymentGrid，StatefulSetGrid以及ServiceGrid三种SuperEdge自研的kubernetes 资源，即可方便地将服务分别部署到这些节点组中，并进行服务流量管控，另外，还能保证各区域服务数量及容灾。
 
-## 关键概念
+# 关键概念
 
-### 整体架构
+## 整体架构
 
-<div align="center">
-  <img src="/images/docs/serviceGroup-architecture.png" width=70% title="ServiceGroup Architecture">
-  <br>
-  <br>
+<div align="left">
+  <img src="../img/serviceGroup-UseCase.png" width=70% title="service-group">
 </div>
 
-### NodeUnit
+## NodeUnit
 
 - NodeUnit通常是位于同一边缘站点内的一个或多个计算资源实例，需要保证同一NodeUnit中的节点内网是通的
 - ServiceGroup组中的服务运行在一个NodeUnit之内
 - ServiceGroup 允许用户设置服务在一个 NodeUnit中运行的pod数量
 - ServiceGroup 能够把服务之间的调用限制在本 NodeUnit 内
 
-### NodeGroup
+## NodeGroup
 
 - NodeGroup 包含一个或者多个 NodeUnit
 - 保证在集合中每个 NodeUnit上均部署ServiceGroup中的服务
 - 集群中增加 NodeUnit 时自动将 ServiceGroup 中的服务部署到新增 NodeUnit
 
-### ServiceGroup
+## ServiceGroup
 
 - ServiceGroup 包含一个或者多个业务服务:适用场景：1）业务需要打包部署；2）或者，需要在每一个 NodeUnit 中均运行起来并且保证pod数量；3）或者，需要将服务之间的调用控制在同一个 NodeUnit 中，不能将流量转发到其他 NodeUnit。
 - 注意：ServiceGroup是一种抽象资源，一个集群中可以创建多个ServiceGroup
 
-### 涉及的资源类型
+## 涉及的资源类型
 
-#### DeploymentGrid
+### DeploymentGrid
 
 DeploymentGrid的格式与Deployment类似，<deployment-template>字段就是原先deployment的template字段，比较特殊的是gridUniqKey字段，该字段指明了节点分组的label的key值：
 
@@ -68,7 +61,7 @@ spec:
   <deployment-template>
 ```
 
-#### StatefulSetGrid
+### StatefulSetGrid
 
 StatefulSetGrid的格式与StatefulSet类似，<statefulset-template>字段就是原先statefulset的template字段，比较特殊的是gridUniqKey字段，该字段指明了节点分组的label的key值：
 
@@ -83,7 +76,7 @@ spec:
   <statefulset-template>
 ```
 
-#### ServiceGrid
+### ServiceGrid
 
 ServiceGrid的格式与Service类似，<service-template>字段就是原先service的template字段，比较特殊的是gridUniqKey字段，该字段指明了节点分组的label的key值：
 
@@ -98,15 +91,15 @@ spec:
   <service-template>
 ```
 
-## 操作步骤
+# 操作步骤
 
 以在边缘部署echo-service为例，我们希望在多个节点组内分别部署echo-service服务，需要做如下事情：
 
-### 确定ServiceGroup唯一标识
+## 确定ServiceGroup唯一标识
 
 这一步是逻辑规划，不需要做任何实际操作。我们将目前要创建的serviceGroup逻辑标记使用的UniqKey为：`zone`
 
-### 将边缘节点分组
+## 将边缘节点分组
 
 这一步需要使用kubectl对边缘节点打label
 
@@ -116,9 +109,9 @@ spec:
 
 如果同一个集群中有多个ServiceGroup请为每一个ServiceGroup分配不同的UniqKey
 
-### 无状态ServiceGroup
+## 无状态ServiceGroup
 
-#### 部署DeploymentGrid
+### 部署DeploymentGrid
 
 ```yaml
 apiVersion: superedge.io/v1
@@ -166,7 +159,7 @@ spec:
           resources: {}
 ```
 
-#### 部署ServiceGrid
+### 部署ServiceGrid
 
 ```yaml
 apiVersion: superedge.io/v1
@@ -219,9 +212,9 @@ servicegrid-demo-svc   ClusterIP   172.19.0.177   <none>        80/TCP    80s
 
 另外，对于部署了DeploymentGrid和ServiceGrid后才添加进集群的节点组，该功能会在新的节点组内自动创建指定的deployment
 
-### 有状态ServiceGroup
+## 有状态ServiceGroup
 
-#### 部署StatefulSetGrid
+### 部署StatefulSetGrid
 
 ```yaml
 apiVersion: superedge.io/v1
@@ -271,7 +264,7 @@ spec:
 
 **注意：template中的serviceName设置成即将创建的service名称**
 
-#### 部署ServiceGrid
+### 部署ServiceGrid
 
 ```yaml
 apiVersion: superedge.io/v1
@@ -326,13 +319,7 @@ servicegrid-demo-svc   ClusterIP   192.168.21.99   <none>        80/TCP    21h
 
 除了采用service访问statefulset负载，StatefulSetGrid还支持使用headless service的方式进行访问，如下所示：
 
-
-<div align="center">
-  <br>
-  <img src="/images/docs/statefulsetgrid.png" width=70% title="Statefulsetgrid" url="/images/docs/statefulsetgrid.png" >
-  <br>
-  <br>
-</div>
+![](../img/statefulsetgrid.png)
 
 StatefulSetGrid提供屏蔽NodeUnit的统一headless service访问形式，如下：
 
@@ -375,10 +362,10 @@ StatefulSetGrid提供屏蔽NodeUnit的统一headless service访问形式，如�
 ...
 ```
 
-### 按NodeUnit灰度
+## 按NodeUnit灰度
 DeploymentGrid和StatefulSetGrid均支持按照NodeUnit进行灰度
 
-#### 重要字段
+### 重要字段
 和灰度功能相关的字段有这些：
 
 autoDeleteUnusedTemplate，templatePool，templates，defaultTemplateName
@@ -391,10 +378,10 @@ defaultTemplateName：默认使用的template，如果不填写或者使用"defa
 
 autoDeleteUnusedTemplate：默认为false，如果设置为ture，会自动删除templatePool中既不在templates中也不在spec.template中的template模板
 
-#### 使用相同的template创建workload
+### 使用相同的template创建workload
 和上面的DeploymentGrid和StatefulsetGrid例子完全一致，如果不需要使用灰度功能，则无需添加额外字段
 
-#### 使用不同的template创建workload
+### 使用不同的template创建workload
 ```yaml
 apiVersion: superedge.io/v1
 kind: DeploymentGrid
@@ -520,6 +507,194 @@ spec:
 这个例子中，NodeUnit zone1将会使用test1 template，NodeUnit zone2将会使用test2 template，其余NodeUnit将会使用defaultTemplateName中指定的template，这里
 会使用test1
 
-### 参考
+## 多集群分发
+支持DeploymentGrid和ServiceGrid的多集群分发，分发的同时也支持多地域灰度，当前基于的多集群管理方案为[clusternet](https://github.com/clusternet/clusternet)
+
+### 特点
+- 支持多集群的按NodeUnit灰度
+- 保证控制集群和被纳管集群应用的强一致和同步更新/删除，做到一次操作，多集群部署
+- 在控制集群可以看到聚合的各分发实例的状态
+- 支持节点地域信息更新情况下应用的补充分发：如原先不属于某个NodeGroup的集群，更新节点信息后加入了NodeGroup，控制集群中的应用会及时向该集群补充下发
+
+### 前置条件
+- 集群部署了SuperEdge中的组件，如果没有Kubernetes集群，可以通过edgeadm进行创建，如果已有Kubernetes集群，可以通过edageadm的addon部署SuperEdge相关组件，将集群转换为一个SuperEdge边缘集群
+- 通过clusternet进行集群的注册和纳管
+
+### 重要字段
+如果要指定某个DeploymentGrid或ServiceGrid需要进行多集群的分发，则在其label中添加`superedge.io/fed`，并置为"yes"
+
+### 使用示例
+创建3个集群，分别为一个管控集群和2个被纳管的边缘集群A,B，通过clusternet进行注册和纳管
+
+其中A集群中一个节点添加zone: zone1的label，加入NodeUnit zone1；集群B不加入NodeGroup
+
+在管控集群中创建DeploymentGrid，其中labels中添加了superedge.io/fed: "yes"，表示该DeploymentGrid需要进行集群的分发，同时灰度指定分发出去的应用在zone1和zone2中使用不同的副本个数
+```yaml
+apiVersion: superedge.io/v1
+kind: DeploymentGrid
+metadata:
+  name: deploymentgrid-demo
+  namespace: default
+  labels:
+    superedge.io/fed: "yes"
+spec:
+  defaultTemplateName: test1
+  gridUniqKey: zone
+  template:
+    replicas: 1
+    selector:
+      matchLabels:
+        appGrid: echo
+    strategy: {}
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          appGrid: echo
+      spec:
+        containers:
+        - image: superedge/echoserver:2.2
+          name: echo
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          resources: {}
+  templatePool:
+    test1:
+      replicas: 2
+      selector:
+        matchLabels:
+          appGrid: echo
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            appGrid: echo
+        spec:
+          containers:
+          - image: superedge/echoserver:2.2
+            name: echo
+            ports:
+            - containerPort: 8080
+              protocol: TCP
+            env:
+              - name: NODE_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: spec.nodeName
+              - name: POD_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              - name: POD_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              - name: POD_IP
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.podIP
+            resources: {}
+    test2:
+      replicas: 3
+      selector:
+        matchLabels:
+          appGrid: echo
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            appGrid: echo
+        spec:
+          containers:
+          - image: superedge/echoserver:2.2
+            name: echo
+            ports:
+            - containerPort: 8080
+              protocol: TCP
+            env:
+              - name: NODE_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: spec.nodeName
+              - name: POD_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              - name: POD_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              - name: POD_IP
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.podIP
+            resources: {}
+  templates:
+    zone1: test1
+    zone2: test2
+```
+
+创建完成后，可以看到在纳管的A集群中，创建了对应的Deployment，而且依照其NodeUnit信息，有两个实例。
+```bash
+[root@VM-0-174-centos ~]# kubectl get deploy
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deploymentgrid-demo-zone1   2/2     2            2           99s
+```
+如果在纳管的A集群中手动更改了deployment的相应字段，会以管控集群的为模板更新回来
+
+B集群中的一个节点添加zone: zone2的label，将其加入NodeUnit zone2;管控集群会及时向该集群补充下发zone2对应的应用
+```bash
+[root@VM-0-42-centos ~]# kubectl get deploy
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deploymentgrid-demo-zone2   3/3     3            3           6s
+```
+
+在管控集群查看deploymentgrid-demo的状态，可以看到被聚合在一起的各个被纳管集群的应用状态，便于查看
+```yaml
+status:
+  states:
+    zone1:
+      conditions:
+      - lastTransitionTime: "2021-06-17T07:33:50Z"
+        lastUpdateTime: "2021-06-17T07:33:50Z"
+        message: Deployment has minimum availability.
+        reason: MinimumReplicasAvailable
+        status: "True"
+        type: Available
+      readyReplicas: 2
+      replicas: 2
+    zone2:
+      conditions:
+      - lastTransitionTime: "2021-06-17T07:37:12Z"
+        lastUpdateTime: "2021-06-17T07:37:12Z"
+        message: Deployment has minimum availability.
+        reason: MinimumReplicasAvailable
+        status: "True"
+        type: Available
+      readyReplicas: 3
+      replicas: 3
+```
+
+## Refs
 
 * [SEP: ServiceGroup StatefulSetGrid Design Specification](https://github.com/superedge/superedge/issues/26)
