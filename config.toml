@@ -87,8 +87,10 @@ weight = 2
 section = ["HTML"]
 
 [params]
-copyright = "The SuperEdge Authors | Copyright © 2021 Tencent Cloud. "
+copyright = "Copyright 2021 The SuperEdge Authors & ©THL A29 Limited, a Tencent company. "
 # privacy_policy = "https://policies.google.com/privacy"
+trademark = "https://www.linuxfoundation.org/trademark-usage/"
+license = "https://github.com/superedge/superedge/blob/main/LICENSE"
 
 # First one is picked as the Twitter card image if not set on page.
 # images = ["images/project-illustration.png"]
