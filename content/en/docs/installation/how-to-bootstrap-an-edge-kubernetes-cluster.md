@@ -464,7 +464,7 @@ kube-linux-arm64-v1.18.2.tar.gz ## Kubernetes static installation package for ku
 │   ├── kubectl                 ## kubectl for kube-v1.18.2
 │   ├── kubelet                 ## kubelet for kube-v1.18.2
 │   └── lite-apiserver          ## The corresponding version of lite-apiserver
-├── cni                         ## cin configuration
+├── cni                         ## cni configuration
 │   └── cni-plugins-linux-v0.8.3.tar.gz ## CNI plug-in binary compression package of v0.8.3
 └── container                   ## Container runtime directory
     └── docker-19.03-linux-arm64.tar.gz ## Docker 19.03 arm64 system installation script and installation package
