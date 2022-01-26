@@ -474,7 +474,7 @@ kube-linux-arm64-v1.18.2.tar.gz ## kube-v1.18.2 arm64的Kubernetes静态安装�
 │   ├── kubectl                 ## kube-v1.18.2的kubectl
 │   ├── kubelet                 ## kube-v1.18.2的kubelet
 │   └── lite-apiserver          ## 相应版本的lite-apiserver，可编译SuperEdge的lite-apiserver生成
-├── cni                         ## cin的配置
+├── cni                         ## cni的配置
 │   └── cni-plugins-linux-v0.8.3.tar.gz ## v0.8.3的CNI插件二进制压缩包
 └── container                   ## 容器运行时目录
     └── docker-19.03-linux-arm64.tar.gz ## docker 19.03 arm64体系的安装脚本和安装包
