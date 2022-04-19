@@ -36,8 +36,6 @@ In response to the above problems, in order to lower the threshold for users to 
 - Two kinds of installation creation
      -   Support online installation；
      -   Support offline installation, so that the privatization environment can also be very simple;
-- Support online installation；
-     - Support offline installation, so that the privatization environment can also be very simple;
 - Can be used in production
 
      - Don't encapsulate too much, so that teams who want to use the edge Kubernetes cluster can perform simple integration in the internal system, and then it is available for production;
